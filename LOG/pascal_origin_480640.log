@@ -1,0 +1,1976 @@
+Called with args:
+Namespace(cfg_file=None, gpu_id=1, imdb_name='voc_2007_trainval', net_name='VGG16', pretrained_model='data/imagenet_models/VGG16.v2.caffemodel', set_cfgs=None)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Stage 1 RPN, init from ImageNet model
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+WARNING: Logging before InitGoogleLogging() is written to STDERR
+I0211 13:09:00.642524 31276 solver.cpp:48] Initializing solver from parameters: 
+train_net: "models/pascal_voc/VGG16/rpn_origin/stage1_rpn_train.pt"
+base_lr: 0.001
+display: 20
+lr_policy: "step"
+gamma: 0.1
+momentum: 0.9
+weight_decay: 0.0005
+stepsize: 60000
+snapshot: 80000
+snapshot_prefix: "vgg16_pascal_origin_480640"
+average_loss: 100
+I0211 13:09:00.642724 31276 solver.cpp:81] Creating training net from train_net file: models/pascal_voc/VGG16/rpn_origin/stage1_rpn_train.pt
+I0211 13:09:00.643703 31276 net.cpp:49] Initializing net from parameters: 
+name: "VGG_ILSVRC_16_layers"
+state {
+  phase: TRAIN
+}
+layer {
+  name: "input-data"
+  type: "Python"
+  top: "data"
+  top: "im_info"
+  top: "gt_boxes"
+  python_param {
+    module: "roi_data_layer.layer"
+    layer: "RoIDataLayer"
+    param_str: "\'num_classes\': 21"
+  }
+}
+layer {
+  name: "conv1_1"
+  type: "Convolution"
+  bottom: "data"
+  top: "conv1_1"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 64
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu1_1"
+  type: "ReLU"
+  bottom: "conv1_1"
+  top: "conv1_1"
+}
+layer {
+  name: "conv1_2"
+  type: "Convolution"
+  bottom: "conv1_1"
+  top: "conv1_2"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 64
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu1_2"
+  type: "ReLU"
+  bottom: "conv1_2"
+  top: "conv1_2"
+}
+layer {
+  name: "pool1"
+  type: "Pooling"
+  bottom: "conv1_2"
+  top: "pool1"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "conv2_1"
+  type: "Convolution"
+  bottom: "pool1"
+  top: "conv2_1"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 128
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu2_1"
+  type: "ReLU"
+  bottom: "conv2_1"
+  top: "conv2_1"
+}
+layer {
+  name: "conv2_2"
+  type: "Convolution"
+  bottom: "conv2_1"
+  top: "conv2_2"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 128
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu2_2"
+  type: "ReLU"
+  bottom: "conv2_2"
+  top: "conv2_2"
+}
+layer {
+  name: "pool2"
+  type: "Pooling"
+  bottom: "conv2_2"
+  top: "pool2"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "conv3_1"
+  type: "Convolution"
+  bottom: "pool2"
+  top: "conv3_1"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 2
+  }
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu3_1"
+  type: "ReLU"
+  bottom: "conv3_1"
+  top: "conv3_1"
+}
+layer {
+  name: "conv3_2"
+  type: "Convolution"
+  bottom: "conv3_1"
+  top: "conv3_2"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 2
+  }
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu3_2"
+  type: "ReLU"
+  bottom: "conv3_2"
+  top: "conv3_2"
+}
+layer {
+  name: "conv3_3"
+  type: "Convolution"
+  bottom: "conv3_2"
+  top: "conv3_3"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 2
+  }
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu3_3"
+  type: "ReLU"
+  bottom: "conv3_3"
+  top: "conv3_3"
+}
+layer {
+  name: "pool3"
+  type: "Pooling"
+  bottom: "conv3_3"
+  top: "pool3"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "conv4_1"
+  type: "Convolution"
+  bottom: "pool3"
+  top: "conv4_1"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 2
+  }
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu4_1"
+  type: "ReLU"
+  bottom: "conv4_1"
+  top: "conv4_1"
+}
+layer {
+  name: "conv4_2"
+  type: "Convolution"
+  bottom: "conv4_1"
+  top: "conv4_2"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 2
+  }
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu4_2"
+  type: "ReLU"
+  bottom: "conv4_2"
+  top: "conv4_2"
+}
+layer {
+  name: "conv4_3"
+  type: "Convolution"
+  bottom: "conv4_2"
+  top: "conv4_3"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 2
+  }
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu4_3"
+  type: "ReLU"
+  bottom: "conv4_3"
+  top: "conv4_3"
+}
+layer {
+  name: "pool4"
+  type: "Pooling"
+  bottom: "conv4_3"
+  top: "pool4"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "conv5_1"
+  type: "Convolution"
+  bottom: "pool4"
+  top: "conv5_1"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 2
+  }
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu5_1"
+  type: "ReLU"
+  bottom: "conv5_1"
+  top: "conv5_1"
+}
+layer {
+  name: "conv5_2"
+  type: "Convolution"
+  bottom: "conv5_1"
+  top: "conv5_2"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 2
+  }
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu5_2"
+  type: "ReLU"
+  bottom: "conv5_2"
+  top: "conv5_2"
+}
+layer {
+  name: "conv5_3"
+  type: "Convolution"
+  bottom: "conv5_2"
+  top: "conv5_3"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 2
+  }
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu5_3"
+  type: "ReLU"
+  bottom: "conv5_3"
+  top: "conv5_3"
+}
+layer {
+  name: "rpn_conv/3x3"
+  type: "Convolution"
+  bottom: "conv5_3"
+  top: "rpn/output"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 2
+  }
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+    stride: 1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "rpn_relu/3x3"
+  type: "ReLU"
+  bottom: "rpn/output"
+  top: "rpn/output"
+}
+layer {
+  name: "rpn_cls_score"
+  type: "Convolution"
+  bottom: "rpn/output"
+  top: "rpn_cls_score"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 2
+  }
+  convolution_param {
+    num_output: 18
+    pad: 0
+    kernel_size: 1
+    stride: 1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "rpn_bbox_pred"
+  type: "Convolution"
+  bottom: "rpn/output"
+  top: "rpn_bbox_pred"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 2
+  }
+  convolution_param {
+    num_output: 36
+    pad: 0
+    kernel_size: 1
+    stride: 1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "rpn_cls_score_reshape"
+  type: "Reshape"
+  bottom: "rpn_cls_score"
+  top: "rpn_cls_score_reshape"
+  reshape_param {
+    shape {
+      dim: 0
+      dim: 2
+      dim: -1
+      dim: 0
+    }
+  }
+}
+layer {
+  name: "rpn-data"
+  type: "Python"
+  bottom: "rpn_cls_score"
+  bottom: "gt_boxes"
+  bottom: "im_info"
+  bottom: "data"
+  top: "rpn_labels"
+  top: "rpn_bbox_targets"
+  top: "rpn_bbox_inside_weights"
+  top: "rpn_bbox_outside_weights"
+  python_param {
+    module: "rpn.anchor_target_layer"
+    layer: "AnchorTargetLayer"
+    param_str: "{\"feat_stride\": 16,\"base_size\": 16, \"scales\": [4,8,16]}"
+  }
+}
+layer {
+  name: "rpn_loss_cls"
+  type: "SoftmaxWithLoss"
+  bottom: "rpn_cls_score_reshape"
+  bottom: "rpn_labels"
+  top: "rpn_cls_loss"
+  loss_weight: 1
+  propagate_down: true
+  propagate_down: false
+  loss_param {
+    ignore_label: -1
+    normalize: true
+  }
+}
+layer {
+  name: "rpn_loss_bbox"
+  type: "SmoothL1Loss"
+  bottom: "rpn_bbox_pred"
+  bottom: "rpn_bbox_targets"
+  bottom: "rpn_bbox_inside_weights"
+  bottom: "rpn_bbox_outside_weights"
+  top: "rpn_loss_bbox"
+  loss_weight: 1
+  smooth_l1_loss_param {
+    sigma: 3
+  }
+}
+I0211 13:09:00.643904 31276 layer_factory.hpp:77] Creating layer input-data
+I0211 13:09:00.664914 31276 net.cpp:106] Creating Layer input-data
+I0211 13:09:00.664937 31276 net.cpp:411] input-data -> data
+I0211 13:09:00.664954 31276 net.cpp:411] input-data -> im_info
+I0211 13:09:00.664963 31276 net.cpp:411] input-data -> gt_boxes
+I0211 13:09:00.680831 31276 net.cpp:150] Setting up input-data
+I0211 13:09:00.680861 31276 net.cpp:157] Top shape: 1 3 300 500 (450000)
+I0211 13:09:00.680871 31276 net.cpp:157] Top shape: 1 3 (3)
+I0211 13:09:00.680876 31276 net.cpp:157] Top shape: 1 4 (4)
+I0211 13:09:00.680881 31276 net.cpp:165] Memory required for data: 1800028
+I0211 13:09:00.680889 31276 layer_factory.hpp:77] Creating layer data_input-data_0_split
+I0211 13:09:00.680912 31276 net.cpp:106] Creating Layer data_input-data_0_split
+I0211 13:09:00.680920 31276 net.cpp:454] data_input-data_0_split <- data
+I0211 13:09:00.680930 31276 net.cpp:411] data_input-data_0_split -> data_input-data_0_split_0
+I0211 13:09:00.680943 31276 net.cpp:411] data_input-data_0_split -> data_input-data_0_split_1
+I0211 13:09:00.681006 31276 net.cpp:150] Setting up data_input-data_0_split
+I0211 13:09:00.681020 31276 net.cpp:157] Top shape: 1 3 300 500 (450000)
+I0211 13:09:00.681027 31276 net.cpp:157] Top shape: 1 3 300 500 (450000)
+I0211 13:09:00.681035 31276 net.cpp:165] Memory required for data: 5400028
+I0211 13:09:00.681040 31276 layer_factory.hpp:77] Creating layer conv1_1
+I0211 13:09:00.681058 31276 net.cpp:106] Creating Layer conv1_1
+I0211 13:09:00.681066 31276 net.cpp:454] conv1_1 <- data_input-data_0_split_0
+I0211 13:09:00.681074 31276 net.cpp:411] conv1_1 -> conv1_1
+I0211 13:09:00.692091 31276 net.cpp:150] Setting up conv1_1
+I0211 13:09:00.692113 31276 net.cpp:157] Top shape: 1 64 300 500 (9600000)
+I0211 13:09:00.692119 31276 net.cpp:165] Memory required for data: 43800028
+I0211 13:09:00.692137 31276 layer_factory.hpp:77] Creating layer relu1_1
+I0211 13:09:00.692147 31276 net.cpp:106] Creating Layer relu1_1
+I0211 13:09:00.692157 31276 net.cpp:454] relu1_1 <- conv1_1
+I0211 13:09:00.692167 31276 net.cpp:397] relu1_1 -> conv1_1 (in-place)
+I0211 13:09:00.692178 31276 net.cpp:150] Setting up relu1_1
+I0211 13:09:00.692186 31276 net.cpp:157] Top shape: 1 64 300 500 (9600000)
+I0211 13:09:00.692193 31276 net.cpp:165] Memory required for data: 82200028
+I0211 13:09:00.692198 31276 layer_factory.hpp:77] Creating layer conv1_2
+I0211 13:09:00.692209 31276 net.cpp:106] Creating Layer conv1_2
+I0211 13:09:00.692219 31276 net.cpp:454] conv1_2 <- conv1_1
+I0211 13:09:00.692226 31276 net.cpp:411] conv1_2 -> conv1_2
+I0211 13:09:00.694020 31276 net.cpp:150] Setting up conv1_2
+I0211 13:09:00.694037 31276 net.cpp:157] Top shape: 1 64 300 500 (9600000)
+I0211 13:09:00.694044 31276 net.cpp:165] Memory required for data: 120600028
+I0211 13:09:00.694058 31276 layer_factory.hpp:77] Creating layer relu1_2
+I0211 13:09:00.694070 31276 net.cpp:106] Creating Layer relu1_2
+I0211 13:09:00.694077 31276 net.cpp:454] relu1_2 <- conv1_2
+I0211 13:09:00.694084 31276 net.cpp:397] relu1_2 -> conv1_2 (in-place)
+I0211 13:09:00.694094 31276 net.cpp:150] Setting up relu1_2
+I0211 13:09:00.694103 31276 net.cpp:157] Top shape: 1 64 300 500 (9600000)
+I0211 13:09:00.694109 31276 net.cpp:165] Memory required for data: 159000028
+I0211 13:09:00.694114 31276 layer_factory.hpp:77] Creating layer pool1
+I0211 13:09:00.694124 31276 net.cpp:106] Creating Layer pool1
+I0211 13:09:00.694131 31276 net.cpp:454] pool1 <- conv1_2
+I0211 13:09:00.694140 31276 net.cpp:411] pool1 -> pool1
+I0211 13:09:00.694213 31276 net.cpp:150] Setting up pool1
+I0211 13:09:00.694226 31276 net.cpp:157] Top shape: 1 64 150 250 (2400000)
+I0211 13:09:00.694232 31276 net.cpp:165] Memory required for data: 168600028
+I0211 13:09:00.694238 31276 layer_factory.hpp:77] Creating layer conv2_1
+I0211 13:09:00.694249 31276 net.cpp:106] Creating Layer conv2_1
+I0211 13:09:00.694257 31276 net.cpp:454] conv2_1 <- pool1
+I0211 13:09:00.694267 31276 net.cpp:411] conv2_1 -> conv2_1
+I0211 13:09:00.694725 31276 net.cpp:150] Setting up conv2_1
+I0211 13:09:00.694741 31276 net.cpp:157] Top shape: 1 128 150 250 (4800000)
+I0211 13:09:00.694746 31276 net.cpp:165] Memory required for data: 187800028
+I0211 13:09:00.694761 31276 layer_factory.hpp:77] Creating layer relu2_1
+I0211 13:09:00.694772 31276 net.cpp:106] Creating Layer relu2_1
+I0211 13:09:00.694778 31276 net.cpp:454] relu2_1 <- conv2_1
+I0211 13:09:00.694788 31276 net.cpp:397] relu2_1 -> conv2_1 (in-place)
+I0211 13:09:00.694797 31276 net.cpp:150] Setting up relu2_1
+I0211 13:09:00.694806 31276 net.cpp:157] Top shape: 1 128 150 250 (4800000)
+I0211 13:09:00.694811 31276 net.cpp:165] Memory required for data: 207000028
+I0211 13:09:00.694816 31276 layer_factory.hpp:77] Creating layer conv2_2
+I0211 13:09:00.694826 31276 net.cpp:106] Creating Layer conv2_2
+I0211 13:09:00.694833 31276 net.cpp:454] conv2_2 <- conv2_1
+I0211 13:09:00.694844 31276 net.cpp:411] conv2_2 -> conv2_2
+I0211 13:09:00.695953 31276 net.cpp:150] Setting up conv2_2
+I0211 13:09:00.695971 31276 net.cpp:157] Top shape: 1 128 150 250 (4800000)
+I0211 13:09:00.695977 31276 net.cpp:165] Memory required for data: 226200028
+I0211 13:09:00.695987 31276 layer_factory.hpp:77] Creating layer relu2_2
+I0211 13:09:00.695997 31276 net.cpp:106] Creating Layer relu2_2
+I0211 13:09:00.696003 31276 net.cpp:454] relu2_2 <- conv2_2
+I0211 13:09:00.696014 31276 net.cpp:397] relu2_2 -> conv2_2 (in-place)
+I0211 13:09:00.696024 31276 net.cpp:150] Setting up relu2_2
+I0211 13:09:00.696033 31276 net.cpp:157] Top shape: 1 128 150 250 (4800000)
+I0211 13:09:00.696039 31276 net.cpp:165] Memory required for data: 245400028
+I0211 13:09:00.696044 31276 layer_factory.hpp:77] Creating layer pool2
+I0211 13:09:00.696053 31276 net.cpp:106] Creating Layer pool2
+I0211 13:09:00.696059 31276 net.cpp:454] pool2 <- conv2_2
+I0211 13:09:00.696069 31276 net.cpp:411] pool2 -> pool2
+I0211 13:09:00.696131 31276 net.cpp:150] Setting up pool2
+I0211 13:09:00.696144 31276 net.cpp:157] Top shape: 1 128 75 125 (1200000)
+I0211 13:09:00.696151 31276 net.cpp:165] Memory required for data: 250200028
+I0211 13:09:00.696156 31276 layer_factory.hpp:77] Creating layer conv3_1
+I0211 13:09:00.696173 31276 net.cpp:106] Creating Layer conv3_1
+I0211 13:09:00.696182 31276 net.cpp:454] conv3_1 <- pool2
+I0211 13:09:00.696189 31276 net.cpp:411] conv3_1 -> conv3_1
+I0211 13:09:00.698070 31276 net.cpp:150] Setting up conv3_1
+I0211 13:09:00.698086 31276 net.cpp:157] Top shape: 1 256 75 125 (2400000)
+I0211 13:09:00.698092 31276 net.cpp:165] Memory required for data: 259800028
+I0211 13:09:00.698106 31276 layer_factory.hpp:77] Creating layer relu3_1
+I0211 13:09:00.698117 31276 net.cpp:106] Creating Layer relu3_1
+I0211 13:09:00.698124 31276 net.cpp:454] relu3_1 <- conv3_1
+I0211 13:09:00.698132 31276 net.cpp:397] relu3_1 -> conv3_1 (in-place)
+I0211 13:09:00.698143 31276 net.cpp:150] Setting up relu3_1
+I0211 13:09:00.698150 31276 net.cpp:157] Top shape: 1 256 75 125 (2400000)
+I0211 13:09:00.698156 31276 net.cpp:165] Memory required for data: 269400028
+I0211 13:09:00.698163 31276 layer_factory.hpp:77] Creating layer conv3_2
+I0211 13:09:00.698174 31276 net.cpp:106] Creating Layer conv3_2
+I0211 13:09:00.698181 31276 net.cpp:454] conv3_2 <- conv3_1
+I0211 13:09:00.698189 31276 net.cpp:411] conv3_2 -> conv3_2
+I0211 13:09:00.700136 31276 net.cpp:150] Setting up conv3_2
+I0211 13:09:00.700153 31276 net.cpp:157] Top shape: 1 256 75 125 (2400000)
+I0211 13:09:00.700160 31276 net.cpp:165] Memory required for data: 279000028
+I0211 13:09:00.700170 31276 layer_factory.hpp:77] Creating layer relu3_2
+I0211 13:09:00.700179 31276 net.cpp:106] Creating Layer relu3_2
+I0211 13:09:00.700186 31276 net.cpp:454] relu3_2 <- conv3_2
+I0211 13:09:00.700193 31276 net.cpp:397] relu3_2 -> conv3_2 (in-place)
+I0211 13:09:00.700202 31276 net.cpp:150] Setting up relu3_2
+I0211 13:09:00.700211 31276 net.cpp:157] Top shape: 1 256 75 125 (2400000)
+I0211 13:09:00.700217 31276 net.cpp:165] Memory required for data: 288600028
+I0211 13:09:00.700222 31276 layer_factory.hpp:77] Creating layer conv3_3
+I0211 13:09:00.700235 31276 net.cpp:106] Creating Layer conv3_3
+I0211 13:09:00.700244 31276 net.cpp:454] conv3_3 <- conv3_2
+I0211 13:09:00.700253 31276 net.cpp:411] conv3_3 -> conv3_3
+I0211 13:09:00.702142 31276 net.cpp:150] Setting up conv3_3
+I0211 13:09:00.702159 31276 net.cpp:157] Top shape: 1 256 75 125 (2400000)
+I0211 13:09:00.702167 31276 net.cpp:165] Memory required for data: 298200028
+I0211 13:09:00.702177 31276 layer_factory.hpp:77] Creating layer relu3_3
+I0211 13:09:00.702188 31276 net.cpp:106] Creating Layer relu3_3
+I0211 13:09:00.702195 31276 net.cpp:454] relu3_3 <- conv3_3
+I0211 13:09:00.702204 31276 net.cpp:397] relu3_3 -> conv3_3 (in-place)
+I0211 13:09:00.702214 31276 net.cpp:150] Setting up relu3_3
+I0211 13:09:00.702222 31276 net.cpp:157] Top shape: 1 256 75 125 (2400000)
+I0211 13:09:00.702229 31276 net.cpp:165] Memory required for data: 307800028
+I0211 13:09:00.702234 31276 layer_factory.hpp:77] Creating layer pool3
+I0211 13:09:00.702245 31276 net.cpp:106] Creating Layer pool3
+I0211 13:09:00.702252 31276 net.cpp:454] pool3 <- conv3_3
+I0211 13:09:00.702260 31276 net.cpp:411] pool3 -> pool3
+I0211 13:09:00.702320 31276 net.cpp:150] Setting up pool3
+I0211 13:09:00.702333 31276 net.cpp:157] Top shape: 1 256 38 63 (612864)
+I0211 13:09:00.702339 31276 net.cpp:165] Memory required for data: 310251484
+I0211 13:09:00.702345 31276 layer_factory.hpp:77] Creating layer conv4_1
+I0211 13:09:00.702358 31276 net.cpp:106] Creating Layer conv4_1
+I0211 13:09:00.702365 31276 net.cpp:454] conv4_1 <- pool3
+I0211 13:09:00.702373 31276 net.cpp:411] conv4_1 -> conv4_1
+I0211 13:09:00.706297 31276 net.cpp:150] Setting up conv4_1
+I0211 13:09:00.706320 31276 net.cpp:157] Top shape: 1 512 38 63 (1225728)
+I0211 13:09:00.706324 31276 net.cpp:165] Memory required for data: 315154396
+I0211 13:09:00.706333 31276 layer_factory.hpp:77] Creating layer relu4_1
+I0211 13:09:00.706344 31276 net.cpp:106] Creating Layer relu4_1
+I0211 13:09:00.706351 31276 net.cpp:454] relu4_1 <- conv4_1
+I0211 13:09:00.706358 31276 net.cpp:397] relu4_1 -> conv4_1 (in-place)
+I0211 13:09:00.706368 31276 net.cpp:150] Setting up relu4_1
+I0211 13:09:00.706377 31276 net.cpp:157] Top shape: 1 512 38 63 (1225728)
+I0211 13:09:00.706383 31276 net.cpp:165] Memory required for data: 320057308
+I0211 13:09:00.706388 31276 layer_factory.hpp:77] Creating layer conv4_2
+I0211 13:09:00.706401 31276 net.cpp:106] Creating Layer conv4_2
+I0211 13:09:00.706408 31276 net.cpp:454] conv4_2 <- conv4_1
+I0211 13:09:00.706418 31276 net.cpp:411] conv4_2 -> conv4_2
+I0211 13:09:00.712537 31276 net.cpp:150] Setting up conv4_2
+I0211 13:09:00.712561 31276 net.cpp:157] Top shape: 1 512 38 63 (1225728)
+I0211 13:09:00.712568 31276 net.cpp:165] Memory required for data: 324960220
+I0211 13:09:00.712584 31276 layer_factory.hpp:77] Creating layer relu4_2
+I0211 13:09:00.712597 31276 net.cpp:106] Creating Layer relu4_2
+I0211 13:09:00.712605 31276 net.cpp:454] relu4_2 <- conv4_2
+I0211 13:09:00.712615 31276 net.cpp:397] relu4_2 -> conv4_2 (in-place)
+I0211 13:09:00.712625 31276 net.cpp:150] Setting up relu4_2
+I0211 13:09:00.712633 31276 net.cpp:157] Top shape: 1 512 38 63 (1225728)
+I0211 13:09:00.712640 31276 net.cpp:165] Memory required for data: 329863132
+I0211 13:09:00.712646 31276 layer_factory.hpp:77] Creating layer conv4_3
+I0211 13:09:00.712661 31276 net.cpp:106] Creating Layer conv4_3
+I0211 13:09:00.712667 31276 net.cpp:454] conv4_3 <- conv4_2
+I0211 13:09:00.712676 31276 net.cpp:411] conv4_3 -> conv4_3
+I0211 13:09:00.718997 31276 net.cpp:150] Setting up conv4_3
+I0211 13:09:00.719030 31276 net.cpp:157] Top shape: 1 512 38 63 (1225728)
+I0211 13:09:00.719036 31276 net.cpp:165] Memory required for data: 334766044
+I0211 13:09:00.719049 31276 layer_factory.hpp:77] Creating layer relu4_3
+I0211 13:09:00.719064 31276 net.cpp:106] Creating Layer relu4_3
+I0211 13:09:00.719071 31276 net.cpp:454] relu4_3 <- conv4_3
+I0211 13:09:00.719079 31276 net.cpp:397] relu4_3 -> conv4_3 (in-place)
+I0211 13:09:00.719094 31276 net.cpp:150] Setting up relu4_3
+I0211 13:09:00.719101 31276 net.cpp:157] Top shape: 1 512 38 63 (1225728)
+I0211 13:09:00.719107 31276 net.cpp:165] Memory required for data: 339668956
+I0211 13:09:00.719117 31276 layer_factory.hpp:77] Creating layer pool4
+I0211 13:09:00.719126 31276 net.cpp:106] Creating Layer pool4
+I0211 13:09:00.719131 31276 net.cpp:454] pool4 <- conv4_3
+I0211 13:09:00.719141 31276 net.cpp:411] pool4 -> pool4
+I0211 13:09:00.719208 31276 net.cpp:150] Setting up pool4
+I0211 13:09:00.719220 31276 net.cpp:157] Top shape: 1 512 19 32 (311296)
+I0211 13:09:00.719228 31276 net.cpp:165] Memory required for data: 340914140
+I0211 13:09:00.719233 31276 layer_factory.hpp:77] Creating layer conv5_1
+I0211 13:09:00.719244 31276 net.cpp:106] Creating Layer conv5_1
+I0211 13:09:00.719251 31276 net.cpp:454] conv5_1 <- pool4
+I0211 13:09:00.719261 31276 net.cpp:411] conv5_1 -> conv5_1
+I0211 13:09:00.725402 31276 net.cpp:150] Setting up conv5_1
+I0211 13:09:00.725430 31276 net.cpp:157] Top shape: 1 512 19 32 (311296)
+I0211 13:09:00.725436 31276 net.cpp:165] Memory required for data: 342159324
+I0211 13:09:00.725446 31276 layer_factory.hpp:77] Creating layer relu5_1
+I0211 13:09:00.725462 31276 net.cpp:106] Creating Layer relu5_1
+I0211 13:09:00.725469 31276 net.cpp:454] relu5_1 <- conv5_1
+I0211 13:09:00.725479 31276 net.cpp:397] relu5_1 -> conv5_1 (in-place)
+I0211 13:09:00.725491 31276 net.cpp:150] Setting up relu5_1
+I0211 13:09:00.725498 31276 net.cpp:157] Top shape: 1 512 19 32 (311296)
+I0211 13:09:00.725504 31276 net.cpp:165] Memory required for data: 343404508
+I0211 13:09:00.725509 31276 layer_factory.hpp:77] Creating layer conv5_2
+I0211 13:09:00.725523 31276 net.cpp:106] Creating Layer conv5_2
+I0211 13:09:00.725530 31276 net.cpp:454] conv5_2 <- conv5_1
+I0211 13:09:00.725538 31276 net.cpp:411] conv5_2 -> conv5_2
+I0211 13:09:00.731669 31276 net.cpp:150] Setting up conv5_2
+I0211 13:09:00.731701 31276 net.cpp:157] Top shape: 1 512 19 32 (311296)
+I0211 13:09:00.731708 31276 net.cpp:165] Memory required for data: 344649692
+I0211 13:09:00.731717 31276 layer_factory.hpp:77] Creating layer relu5_2
+I0211 13:09:00.731731 31276 net.cpp:106] Creating Layer relu5_2
+I0211 13:09:00.731739 31276 net.cpp:454] relu5_2 <- conv5_2
+I0211 13:09:00.731750 31276 net.cpp:397] relu5_2 -> conv5_2 (in-place)
+I0211 13:09:00.731760 31276 net.cpp:150] Setting up relu5_2
+I0211 13:09:00.731770 31276 net.cpp:157] Top shape: 1 512 19 32 (311296)
+I0211 13:09:00.731775 31276 net.cpp:165] Memory required for data: 345894876
+I0211 13:09:00.731781 31276 layer_factory.hpp:77] Creating layer conv5_3
+I0211 13:09:00.731793 31276 net.cpp:106] Creating Layer conv5_3
+I0211 13:09:00.731801 31276 net.cpp:454] conv5_3 <- conv5_2
+I0211 13:09:00.731807 31276 net.cpp:411] conv5_3 -> conv5_3
+I0211 13:09:00.738157 31276 net.cpp:150] Setting up conv5_3
+I0211 13:09:00.738199 31276 net.cpp:157] Top shape: 1 512 19 32 (311296)
+I0211 13:09:00.738205 31276 net.cpp:165] Memory required for data: 347140060
+I0211 13:09:00.738217 31276 layer_factory.hpp:77] Creating layer relu5_3
+I0211 13:09:00.738230 31276 net.cpp:106] Creating Layer relu5_3
+I0211 13:09:00.738237 31276 net.cpp:454] relu5_3 <- conv5_3
+I0211 13:09:00.738251 31276 net.cpp:397] relu5_3 -> conv5_3 (in-place)
+I0211 13:09:00.738265 31276 net.cpp:150] Setting up relu5_3
+I0211 13:09:00.738273 31276 net.cpp:157] Top shape: 1 512 19 32 (311296)
+I0211 13:09:00.738279 31276 net.cpp:165] Memory required for data: 348385244
+I0211 13:09:00.738286 31276 layer_factory.hpp:77] Creating layer rpn_conv/3x3
+I0211 13:09:00.738309 31276 net.cpp:106] Creating Layer rpn_conv/3x3
+I0211 13:09:00.738317 31276 net.cpp:454] rpn_conv/3x3 <- conv5_3
+I0211 13:09:00.738328 31276 net.cpp:411] rpn_conv/3x3 -> rpn/output
+I0211 13:09:00.818285 31276 net.cpp:150] Setting up rpn_conv/3x3
+I0211 13:09:00.818320 31276 net.cpp:157] Top shape: 1 512 19 32 (311296)
+I0211 13:09:00.818325 31276 net.cpp:165] Memory required for data: 349630428
+I0211 13:09:00.818339 31276 layer_factory.hpp:77] Creating layer rpn_relu/3x3
+I0211 13:09:00.818354 31276 net.cpp:106] Creating Layer rpn_relu/3x3
+I0211 13:09:00.818361 31276 net.cpp:454] rpn_relu/3x3 <- rpn/output
+I0211 13:09:00.818374 31276 net.cpp:397] rpn_relu/3x3 -> rpn/output (in-place)
+I0211 13:09:00.818389 31276 net.cpp:150] Setting up rpn_relu/3x3
+I0211 13:09:00.818397 31276 net.cpp:157] Top shape: 1 512 19 32 (311296)
+I0211 13:09:00.818403 31276 net.cpp:165] Memory required for data: 350875612
+I0211 13:09:00.818408 31276 layer_factory.hpp:77] Creating layer rpn/output_rpn_relu/3x3_0_split
+I0211 13:09:00.818415 31276 net.cpp:106] Creating Layer rpn/output_rpn_relu/3x3_0_split
+I0211 13:09:00.818423 31276 net.cpp:454] rpn/output_rpn_relu/3x3_0_split <- rpn/output
+I0211 13:09:00.818429 31276 net.cpp:411] rpn/output_rpn_relu/3x3_0_split -> rpn/output_rpn_relu/3x3_0_split_0
+I0211 13:09:00.818441 31276 net.cpp:411] rpn/output_rpn_relu/3x3_0_split -> rpn/output_rpn_relu/3x3_0_split_1
+I0211 13:09:00.818503 31276 net.cpp:150] Setting up rpn/output_rpn_relu/3x3_0_split
+I0211 13:09:00.818516 31276 net.cpp:157] Top shape: 1 512 19 32 (311296)
+I0211 13:09:00.818523 31276 net.cpp:157] Top shape: 1 512 19 32 (311296)
+I0211 13:09:00.818529 31276 net.cpp:165] Memory required for data: 353365980
+I0211 13:09:00.818536 31276 layer_factory.hpp:77] Creating layer rpn_cls_score
+I0211 13:09:00.818554 31276 net.cpp:106] Creating Layer rpn_cls_score
+I0211 13:09:00.818578 31276 net.cpp:454] rpn_cls_score <- rpn/output_rpn_relu/3x3_0_split_0
+I0211 13:09:00.818588 31276 net.cpp:411] rpn_cls_score -> rpn_cls_score
+I0211 13:09:00.819326 31276 net.cpp:150] Setting up rpn_cls_score
+I0211 13:09:00.819340 31276 net.cpp:157] Top shape: 1 18 19 32 (10944)
+I0211 13:09:00.819347 31276 net.cpp:165] Memory required for data: 353409756
+I0211 13:09:00.819358 31276 layer_factory.hpp:77] Creating layer rpn_cls_score_rpn_cls_score_0_split
+I0211 13:09:00.819370 31276 net.cpp:106] Creating Layer rpn_cls_score_rpn_cls_score_0_split
+I0211 13:09:00.819376 31276 net.cpp:454] rpn_cls_score_rpn_cls_score_0_split <- rpn_cls_score
+I0211 13:09:00.819385 31276 net.cpp:411] rpn_cls_score_rpn_cls_score_0_split -> rpn_cls_score_rpn_cls_score_0_split_0
+I0211 13:09:00.819394 31276 net.cpp:411] rpn_cls_score_rpn_cls_score_0_split -> rpn_cls_score_rpn_cls_score_0_split_1
+I0211 13:09:00.819455 31276 net.cpp:150] Setting up rpn_cls_score_rpn_cls_score_0_split
+I0211 13:09:00.819468 31276 net.cpp:157] Top shape: 1 18 19 32 (10944)
+I0211 13:09:00.819475 31276 net.cpp:157] Top shape: 1 18 19 32 (10944)
+I0211 13:09:00.819481 31276 net.cpp:165] Memory required for data: 353497308
+I0211 13:09:00.819486 31276 layer_factory.hpp:77] Creating layer rpn_bbox_pred
+I0211 13:09:00.819501 31276 net.cpp:106] Creating Layer rpn_bbox_pred
+I0211 13:09:00.819510 31276 net.cpp:454] rpn_bbox_pred <- rpn/output_rpn_relu/3x3_0_split_1
+I0211 13:09:00.819519 31276 net.cpp:411] rpn_bbox_pred -> rpn_bbox_pred
+I0211 13:09:00.820508 31276 net.cpp:150] Setting up rpn_bbox_pred
+I0211 13:09:00.820521 31276 net.cpp:157] Top shape: 1 36 19 32 (21888)
+I0211 13:09:00.820528 31276 net.cpp:165] Memory required for data: 353584860
+I0211 13:09:00.820538 31276 layer_factory.hpp:77] Creating layer rpn_cls_score_reshape
+I0211 13:09:00.820554 31276 net.cpp:106] Creating Layer rpn_cls_score_reshape
+I0211 13:09:00.820560 31276 net.cpp:454] rpn_cls_score_reshape <- rpn_cls_score_rpn_cls_score_0_split_0
+I0211 13:09:00.820570 31276 net.cpp:411] rpn_cls_score_reshape -> rpn_cls_score_reshape
+I0211 13:09:00.820618 31276 net.cpp:150] Setting up rpn_cls_score_reshape
+I0211 13:09:00.820631 31276 net.cpp:157] Top shape: 1 2 171 32 (10944)
+I0211 13:09:00.820636 31276 net.cpp:165] Memory required for data: 353628636
+I0211 13:09:00.820642 31276 layer_factory.hpp:77] Creating layer rpn-data
+I0211 13:09:00.821339 31276 net.cpp:106] Creating Layer rpn-data
+I0211 13:09:00.821354 31276 net.cpp:454] rpn-data <- rpn_cls_score_rpn_cls_score_0_split_1
+I0211 13:09:00.821363 31276 net.cpp:454] rpn-data <- gt_boxes
+I0211 13:09:00.821370 31276 net.cpp:454] rpn-data <- im_info
+I0211 13:09:00.821377 31276 net.cpp:454] rpn-data <- data_input-data_0_split_1
+I0211 13:09:00.821386 31276 net.cpp:411] rpn-data -> rpn_labels
+I0211 13:09:00.821398 31276 net.cpp:411] rpn-data -> rpn_bbox_targets
+I0211 13:09:00.821408 31276 net.cpp:411] rpn-data -> rpn_bbox_inside_weights
+I0211 13:09:00.821424 31276 net.cpp:411] rpn-data -> rpn_bbox_outside_weights
+I0211 13:09:00.824084 31276 net.cpp:150] Setting up rpn-data
+I0211 13:09:00.824103 31276 net.cpp:157] Top shape: 1 1 171 32 (5472)
+I0211 13:09:00.824112 31276 net.cpp:157] Top shape: 1 36 19 32 (21888)
+I0211 13:09:00.824120 31276 net.cpp:157] Top shape: 1 36 19 32 (21888)
+I0211 13:09:00.824127 31276 net.cpp:157] Top shape: 1 36 19 32 (21888)
+I0211 13:09:00.824133 31276 net.cpp:165] Memory required for data: 353913180
+I0211 13:09:00.824141 31276 layer_factory.hpp:77] Creating layer rpn_loss_cls
+I0211 13:09:00.824152 31276 net.cpp:106] Creating Layer rpn_loss_cls
+I0211 13:09:00.824159 31276 net.cpp:454] rpn_loss_cls <- rpn_cls_score_reshape
+I0211 13:09:00.824167 31276 net.cpp:454] rpn_loss_cls <- rpn_labels
+I0211 13:09:00.824175 31276 net.cpp:411] rpn_loss_cls -> rpn_cls_loss
+I0211 13:09:00.824190 31276 layer_factory.hpp:77] Creating layer rpn_loss_cls
+I0211 13:09:00.824367 31276 net.cpp:150] Setting up rpn_loss_cls
+I0211 13:09:00.824380 31276 net.cpp:157] Top shape: (1)
+I0211 13:09:00.824386 31276 net.cpp:160]     with loss weight 1
+I0211 13:09:00.824398 31276 net.cpp:165] Memory required for data: 353913184
+I0211 13:09:00.824404 31276 layer_factory.hpp:77] Creating layer rpn_loss_bbox
+I0211 13:09:00.824415 31276 net.cpp:106] Creating Layer rpn_loss_bbox
+I0211 13:09:00.824422 31276 net.cpp:454] rpn_loss_bbox <- rpn_bbox_pred
+I0211 13:09:00.824429 31276 net.cpp:454] rpn_loss_bbox <- rpn_bbox_targets
+I0211 13:09:00.824437 31276 net.cpp:454] rpn_loss_bbox <- rpn_bbox_inside_weights
+I0211 13:09:00.824445 31276 net.cpp:454] rpn_loss_bbox <- rpn_bbox_outside_weights
+I0211 13:09:00.824455 31276 net.cpp:411] rpn_loss_bbox -> rpn_loss_bbox
+I0211 13:09:00.824748 31276 net.cpp:150] Setting up rpn_loss_bbox
+I0211 13:09:00.824764 31276 net.cpp:157] Top shape: (1)
+I0211 13:09:00.824771 31276 net.cpp:160]     with loss weight 1
+I0211 13:09:00.824780 31276 net.cpp:165] Memory required for data: 353913188
+I0211 13:09:00.824785 31276 net.cpp:226] rpn_loss_bbox needs backward computation.
+I0211 13:09:00.824792 31276 net.cpp:226] rpn_loss_cls needs backward computation.
+I0211 13:09:00.824800 31276 net.cpp:226] rpn-data needs backward computation.
+I0211 13:09:00.824806 31276 net.cpp:226] rpn_cls_score_reshape needs backward computation.
+I0211 13:09:00.824813 31276 net.cpp:226] rpn_bbox_pred needs backward computation.
+I0211 13:09:00.824818 31276 net.cpp:226] rpn_cls_score_rpn_cls_score_0_split needs backward computation.
+I0211 13:09:00.824825 31276 net.cpp:226] rpn_cls_score needs backward computation.
+I0211 13:09:00.824829 31276 net.cpp:226] rpn/output_rpn_relu/3x3_0_split needs backward computation.
+I0211 13:09:00.824836 31276 net.cpp:226] rpn_relu/3x3 needs backward computation.
+I0211 13:09:00.824841 31276 net.cpp:226] rpn_conv/3x3 needs backward computation.
+I0211 13:09:00.824847 31276 net.cpp:226] relu5_3 needs backward computation.
+I0211 13:09:00.824854 31276 net.cpp:226] conv5_3 needs backward computation.
+I0211 13:09:00.824859 31276 net.cpp:226] relu5_2 needs backward computation.
+I0211 13:09:00.824865 31276 net.cpp:226] conv5_2 needs backward computation.
+I0211 13:09:00.824872 31276 net.cpp:226] relu5_1 needs backward computation.
+I0211 13:09:00.824877 31276 net.cpp:226] conv5_1 needs backward computation.
+I0211 13:09:00.824882 31276 net.cpp:226] pool4 needs backward computation.
+I0211 13:09:00.824888 31276 net.cpp:226] relu4_3 needs backward computation.
+I0211 13:09:00.824894 31276 net.cpp:226] conv4_3 needs backward computation.
+I0211 13:09:00.824900 31276 net.cpp:226] relu4_2 needs backward computation.
+I0211 13:09:00.824908 31276 net.cpp:226] conv4_2 needs backward computation.
+I0211 13:09:00.824913 31276 net.cpp:226] relu4_1 needs backward computation.
+I0211 13:09:00.824918 31276 net.cpp:226] conv4_1 needs backward computation.
+I0211 13:09:00.824924 31276 net.cpp:226] pool3 needs backward computation.
+I0211 13:09:00.824930 31276 net.cpp:226] relu3_3 needs backward computation.
+I0211 13:09:00.824937 31276 net.cpp:226] conv3_3 needs backward computation.
+I0211 13:09:00.824942 31276 net.cpp:226] relu3_2 needs backward computation.
+I0211 13:09:00.824947 31276 net.cpp:226] conv3_2 needs backward computation.
+I0211 13:09:00.824952 31276 net.cpp:226] relu3_1 needs backward computation.
+I0211 13:09:00.824959 31276 net.cpp:226] conv3_1 needs backward computation.
+I0211 13:09:00.824965 31276 net.cpp:228] pool2 does not need backward computation.
+I0211 13:09:00.824971 31276 net.cpp:228] relu2_2 does not need backward computation.
+I0211 13:09:00.824977 31276 net.cpp:228] conv2_2 does not need backward computation.
+I0211 13:09:00.824985 31276 net.cpp:228] relu2_1 does not need backward computation.
+I0211 13:09:00.824991 31276 net.cpp:228] conv2_1 does not need backward computation.
+I0211 13:09:00.824996 31276 net.cpp:228] pool1 does not need backward computation.
+I0211 13:09:00.825003 31276 net.cpp:228] relu1_2 does not need backward computation.
+I0211 13:09:00.825009 31276 net.cpp:228] conv1_2 does not need backward computation.
+I0211 13:09:00.825016 31276 net.cpp:228] relu1_1 does not need backward computation.
+I0211 13:09:00.825021 31276 net.cpp:228] conv1_1 does not need backward computation.
+I0211 13:09:00.825027 31276 net.cpp:228] data_input-data_0_split does not need backward computation.
+I0211 13:09:00.825034 31276 net.cpp:228] input-data does not need backward computation.
+I0211 13:09:00.825040 31276 net.cpp:270] This network produces output rpn_cls_loss
+I0211 13:09:00.825047 31276 net.cpp:270] This network produces output rpn_loss_bbox
+I0211 13:09:00.825083 31276 net.cpp:283] Network initialization done.
+I0211 13:09:00.825209 31276 solver.cpp:60] Solver scaffolding done.
+[libprotobuf WARNING google/protobuf/io/coded_stream.cc:505] Reading dangerously large protocol message.  If the message turns out to be larger than 2147483647 bytes, parsing will be halted for security reasons.  To increase the limit (or to disable these warnings), see CodedInputStream::SetTotalBytesLimit() in google/protobuf/io/coded_stream.h.
+[libprotobuf WARNING google/protobuf/io/coded_stream.cc:78] The total number of bytes read was 553432430
+I0211 13:09:08.536003 31276 net.cpp:816] Ignoring source layer pool5
+I0211 13:09:08.536056 31276 net.cpp:816] Ignoring source layer fc6
+I0211 13:09:08.536062 31276 net.cpp:816] Ignoring source layer relu6
+I0211 13:09:08.536067 31276 net.cpp:816] Ignoring source layer drop6
+I0211 13:09:08.536072 31276 net.cpp:816] Ignoring source layer fc7
+I0211 13:09:08.536077 31276 net.cpp:816] Ignoring source layer relu7
+I0211 13:09:08.536082 31276 net.cpp:816] Ignoring source layer drop7
+I0211 13:09:08.536085 31276 net.cpp:816] Ignoring source layer fc8
+I0211 13:09:08.536090 31276 net.cpp:816] Ignoring source layer prob
+I0211 13:09:09.003294 31276 solver.cpp:229] Iteration 0, loss = 0.857884
+I0211 13:09:09.003342 31276 solver.cpp:245]     Train net output #0: rpn_cls_loss = 0.694759 (* 1 = 0.694759 loss)
+I0211 13:09:09.003355 31276 solver.cpp:245]     Train net output #1: rpn_loss_bbox = 0.163125 (* 1 = 0.163125 loss)
+I0211 13:09:09.003365 31276 sgd_solver.cpp:106] Iteration 0, lr = 0.001
+Init model: data/imagenet_models/VGG16.v2.caffemodel
+Using config:
+{'DATA_DIR': '/home/duchenting/dct/py-faster-rcnn/data',
+ 'DEDUP_BOXES': 0.0625,
+ 'EPS': 1e-14,
+ 'EXP_DIR': 'default',
+ 'GPU_ID': 1,
+ 'MATLAB': 'matlab',
+ 'MODELS_DIR': '/home/duchenting/dct/py-faster-rcnn/models/pascal_voc',
+ 'PIXEL_MEANS': array([[[ 102.9801,  115.9465,  122.7717]]]),
+ 'RNG_SEED': 3,
+ 'ROOT_DIR': '/home/duchenting/dct/py-faster-rcnn',
+ 'TEST': {'BBOX_REG': True,
+          'HAS_RPN': False,
+          'MAX_SIZE': 500,
+          'NMS': 0.3,
+          'PROPOSAL_METHOD': 'selective_search',
+          'RPN_MIN_SIZE': 16,
+          'RPN_NMS_THRESH': 0.7,
+          'RPN_POST_NMS_TOP_N': 300,
+          'RPN_PRE_NMS_TOP_N': 6000,
+          'SCALES': [300],
+          'SVM': False},
+ 'TRAIN': {'ASPECT_GROUPING': True,
+           'BATCH_SIZE': 128,
+           'BBOX_INSIDE_WEIGHTS': [1.0, 1.0, 1.0, 1.0],
+           'BBOX_NORMALIZE_MEANS': [0.0, 0.0, 0.0, 0.0],
+           'BBOX_NORMALIZE_STDS': [0.1, 0.1, 0.2, 0.2],
+           'BBOX_NORMALIZE_TARGETS': True,
+           'BBOX_NORMALIZE_TARGETS_PRECOMPUTED': False,
+           'BBOX_REG': False,
+           'BBOX_THRESH': 0.5,
+           'BG_THRESH_HI': 0.5,
+           'BG_THRESH_LO': 0.1,
+           'FG_FRACTION': 0.25,
+           'FG_THRESH': 0.5,
+           'HAS_RPN': True,
+           'IMS_PER_BATCH': 1,
+           'MAX_SIZE': 500,
+           'PROPOSAL_METHOD': 'gt',
+           'RPN_BATCHSIZE': 256,
+           'RPN_BBOX_INSIDE_WEIGHTS': [1.0, 1.0, 1.0, 1.0],
+           'RPN_CLOBBER_POSITIVES': False,
+           'RPN_FG_FRACTION': 0.5,
+           'RPN_MIN_SIZE': 16,
+           'RPN_NEGATIVE_OVERLAP': 0.3,
+           'RPN_NMS_THRESH': 0.7,
+           'RPN_POSITIVE_OVERLAP': 0.7,
+           'RPN_POSITIVE_WEIGHT': -1.0,
+           'RPN_POST_NMS_TOP_N': 2000,
+           'RPN_PRE_NMS_TOP_N': 12000,
+           'SCALES': [300],
+           'SNAPSHOT_INFIX': 'stage1',
+           'SNAPSHOT_ITERS': 10000,
+           'USE_FLIPPED': True,
+           'USE_PREFETCH': False},
+ 'USE_GPU_NMS': True}
+Loaded dataset `voc_2007_trainval` for training
+Set proposal method: gt
+Appending horizontally-flipped training examples...
+voc_2007_trainval gt roidb loaded from /home/duchenting/dct/py-faster-rcnn/data/cache/voc_2007_trainval_gt_roidb.pkl
+done
+Preparing training data...
+done
+roidb len: 10022
+Output will be saved to `/home/duchenting/dct/py-faster-rcnn/output/default/voc_2007_trainval`
+Filtered 0 roidb entries: 10022 -> 10022
+RoiDataLayer: name_to_top: {'gt_boxes': 2, 'data': 0, 'im_info': 1}
+anchors:
+[[ -38.  -16.   53.   31.]
+ [ -84.  -40.   99.   55.]
+ [-176.  -88.  191.  103.]
+ [ -24.  -24.   39.   39.]
+ [ -56.  -56.   71.   71.]
+ [-120. -120.  135.  135.]
+ [ -14.  -36.   29.   51.]
+ [ -36.  -80.   51.   95.]
+ [ -80. -168.   95.  183.]]
+anchor shapes:
+[[  91.   47.]
+ [ 183.   95.]
+ [ 367.  191.]
+ [  63.   63.]
+ [ 127.  127.]
+ [ 255.  255.]
+ [  43.   87.]
+ [  87.  175.]
+ [ 175.  351.]]
+AnchorTargetLayer: height 19 width 32
+Loading pretrained model weights from data/imagenet_models/VGG16.v2.caffemodel
+Solving...
+
+im_size: (400.0, 300.0)
+scale: 0.800000011921
+height, width: (25, 19)
+rpn: gt_boxes.shape (2, 5)
+rpn: gt_boxes [[  30.39999962   48.          299.20001221  399.20001221   15.        ]
+ [  35.20000076   79.19999695  291.20001221  399.20001221    2.        ]]
+total_anchors 4275
+inds_inside 1484
+anchors.shape (1484, 4)
+means:
+[[ 0.00882812  0.03023437  0.00875913  0.23553948]]
+stdevs:
+[[ 0.03016232  0.08861029  0.01458148  0.02782761]]
+rpn: max max_overlap 0.773491725959
+rpn: num_positive 10
+rpn: num_negative 246
+rpn: num_positive avg 10
+rpn: num_negative avg 246
+
+im_size: (452.0, 300.0)
+scale: 0.903614461422
+height, width: (29, 19)
+rpn: gt_boxes.shape (2, 5)
+rpn: gt_boxes [[  53.3132515   117.46987915  299.09637451  450.90362549   14.        ]
+ [ 117.46987915   55.1204834   299.09637451  396.68673706   15.        ]]
+total_anchors 4959
+inds_inside 1758
+anchors.shape (1758, 4)
+means:
+[[ 0.03649341  0.01950042  0.00869244  0.15105969]]
+stdevs:
+[[ 0.04150782  0.08267652  0.02859453  0.1319983 ]]
+rpn: max max_overlap 0.879571022493
+rpn: num_positive 13
+rpn: num_negative 243
+rpn: num_positive avg 11
+rpn: num_negative avg 244
+
+im_size: (300.0, 400.0)
+scale: 0.800000011921
+height, width: (19, 25)
+rpn: gt_boxes.shape (4, 5)
+rpn: gt_boxes [[   0.           69.59999847   84.          253.6000061     9.        ]
+ [ 106.40000153   86.40000153  178.3999939   201.6000061     9.        ]
+ [ 187.19999695   99.19999695  255.19999695  182.3999939    12.        ]
+ [ 124.80000305  185.6000061   216.          299.20001221   12.        ]]
+total_anchors 4275
+inds_inside 1474
+anchors.shape (1474, 4)
+means:
+[[ 0.03254678  0.02191856 -0.03752214  0.06182927]]
+stdevs:
+[[ 0.05805037  0.0832615   0.10452859  0.22709456]]
+rpn: max max_overlap 0.69018585955
+rpn: num_positive 8
+rpn: num_negative 248
+rpn: num_positive avg 10
+rpn: num_negative avg 245
+
+im_size: (300.0, 400.0)
+scale: 0.800000011921
+height, width: (19, 25)
+rpn: gt_boxes.shape (1, 5)
+rpn: gt_boxes [[ 209.6000061   177.6000061   230.3999939   239.19999695   15.        ]]
+total_anchors 4275
+inds_inside 1474
+anchors.shape (1474, 4)
+means:
+[[ 0.03677259  0.02121    -0.0778105   0.03744133]]
+stdevs:
+[[ 0.058672    0.08379132  0.18820971  0.24013605]]
+rpn: max max_overlap 0.352448098206
+rpn: num_positive 2
+rpn: num_negative 254
+rpn: num_positive avg 8
+rpn: num_negative avg 247
+
+im_size: (300.0, 453.0)
+scale: 0.906344413757
+height, width: (19, 29)
+rpn: gt_boxes.shape (2, 5)
+rpn: gt_boxes [[ 309.06344604   79.75830841  396.07250977  290.93655396   15.        ]
+ [  83.38368225  160.42295837  144.10876465  278.2477417     9.        ]]
+total_anchors 4959
+inds_inside 1753
+anchors.shape (1753, 4)
+means:
+[[ 0.01883268  0.01675709 -0.04974832  0.06307943]]
+stdevs:
+[[ 0.07210392  0.08487381  0.19893617  0.23414081]]
+rpn: max max_overlap 0.717281026142
+rpn: num_positive 5
+rpn: num_negative 251
+rpn: num_positive avg 7
+rpn: num_negative avg 248
+
+im_size: (259.0, 500.0)
+scale: 1.0
+height, width: (17, 32)
+rpn: gt_boxes.shape (3, 5)
+rpn: gt_boxes [[   5.   12.  492.  258.    7.]
+ [  99.    3.  139.   79.   15.]
+ [  66.   13.  100.   83.   15.]]
+total_anchors 4896
+inds_inside 1540
+anchors.shape (1540, 4)
+means:
+[[ 0.01080444  0.00544397  0.06126207  0.12030464]]
+stdevs:
+[[ 0.07824423  0.08241999  0.22539936  0.2122452 ]]
+rpn: max max_overlap 0.657392124499
+rpn: num_positive 23
+rpn: num_negative 233
+rpn: num_positive avg 10
+rpn: num_negative avg 245
+
+im_size: (300.0, 400.0)
+scale: 0.800000011921
+height, width: (19, 25)
+rpn: gt_boxes.shape (3, 5)
+rpn: gt_boxes [[  20.          204.          218.3999939   299.20001221   11.        ]
+ [ 164.           56.          332.          299.20001221   15.        ]
+ [  74.40000153   81.59999847  226.3999939   210.3999939    15.        ]]
+total_anchors 4275
+inds_inside 1474
+anchors.shape (1474, 4)
+means:
+[[ 0.01045301  0.00793257  0.04209213  0.10016563]]
+stdevs:
+[[ 0.07846822  0.07778352  0.23678962  0.20131887]]
+rpn: max max_overlap 0.849872500555
+rpn: num_positive 11
+rpn: num_negative 245
+rpn: num_positive avg 10
+rpn: num_negative avg 245
+
+im_size: (300.0, 400.0)
+scale: 0.800000011921
+height, width: (19, 25)
+rpn: gt_boxes.shape (5, 5)
+rpn: gt_boxes [[ 232.          170.3999939   326.3999939   272.            9.        ]
+ [ 303.20001221  158.3999939   376.79998779  244.            9.        ]
+ [ 194.3999939   138.3999939   235.19999695  189.6000061     9.        ]
+ [ 144.          156.80000305  202.3999939   221.6000061     9.        ]
+ [  64.80000305  138.3999939   102.40000153  177.6000061     9.        ]]
+total_anchors 4275
+inds_inside 1474
+anchors.shape (1474, 4)
+means:
+[[ 0.00559062  0.01062142  0.01000226  0.03317657]]
+stdevs:
+[[ 0.08015165  0.08180434  0.23664931  0.2726707 ]]
+rpn: max max_overlap 0.706968145499
+rpn: num_positive 13
+rpn: num_negative 243
+rpn: num_positive avg 10
+rpn: num_negative avg 245
+
+im_size: (300.0, 400.0)
+scale: 0.800000011921
+height, width: (19, 25)
+rpn: gt_boxes.shape (6, 5)
+rpn: gt_boxes [[   1.60000002  197.6000061   354.3999939   299.20001221   14.        ]
+ [  86.40000153  135.19999695  184.80000305  298.3999939    15.        ]
+ [  85.59999847  109.59999847  226.3999939   299.20001221   15.        ]
+ [ 226.3999939   175.19999695  277.6000061   271.20001221   15.        ]
+ [ 187.19999695  128.80000305  288.          299.20001221   15.        ]
+ [ 224.          116.80000305  336.          298.3999939    15.        ]]
+total_anchors 4275
+inds_inside 1474
+anchors.shape (1474, 4)
+means:
+[[ 0.00438817  0.01460705  0.07204212  0.04532547]]
+stdevs:
+[[ 0.10951027  0.07893412  0.29293924  0.25326635]]
+rpn: max max_overlap 0.740194308193
+rpn: num_positive 18
+rpn: num_negative 238
+rpn: num_positive avg 11
+rpn: num_negative avg 244
+
+im_size: (300.0, 400.0)
+scale: 0.800000011921
+height, width: (19, 25)
+rpn: gt_boxes.shape (3, 5)
+rpn: gt_boxes [[  76.80000305  100.80000305  312.79998779  297.6000061    12.        ]
+ [  66.40000153   28.          399.20001221  241.6000061    15.        ]
+ [   0.            0.          399.20001221  297.6000061    18.        ]]
+total_anchors 4275
+inds_inside 1474
+anchors.shape (1474, 4)
+means:
+[[ 0.0125842   0.00938101  0.04139623  0.06523664]]
+stdevs:
+[[ 0.10336209  0.08873152  0.2814935   0.24481341]]
+rpn: max max_overlap 0.818668251944
+rpn: num_positive 22
+rpn: num_negative 234
+rpn: num_positive avg 12
+rpn: num_negative avg 243
+
+im_size: (300.0, 449.0)
+scale: 0.898203611374
+height, width: (19, 29)
+rpn: gt_boxes.shape (3, 5)
+rpn: gt_boxes [[ 176.94610596   45.80838394  328.74252319  299.10180664   15.        ]
+ [ 277.54492188   32.33533096  425.74850464  299.10180664   15.        ]
+ [ 140.11976624   17.96407127  253.29341125  160.77844238    9.        ]]
+total_anchors 4959
+inds_inside 1732
+anchors.shape (1732, 4)
+means:
+[[ 0.01279359  0.00889378  0.00885413  0.06302863]]
+stdevs:
+[[ 0.10322075  0.08604005  0.29860264  0.23617909]]
+rpn: max max_overlap 0.803439278577
+rpn: num_positive 10
+rpn: num_negative 246
+rpn: num_positive avg 12
+rpn: num_negative avg 243
+
+im_size: (300.0, 400.0)
+scale: 0.800000011921
+height, width: (19, 25)
+rpn: gt_boxes.shape (2, 5)
+rpn: gt_boxes [[  20.79999924  140.80000305  183.19999695  273.6000061     7.        ]
+ [   1.60000002  154.3999939    28.79999924  212.            7.        ]]
+total_anchors 4275
+inds_inside 1474
+anchors.shape (1474, 4)
+means:
+[[ 0.01081541  0.00991165  0.01066872  0.05924612]]
+stdevs:
+[[ 0.104277    0.08512712  0.29878176  0.23612566]]
+rpn: max max_overlap 0.701578266463
+rpn: num_positive 4
+rpn: num_negative 252
+rpn: num_positive avg 11
+rpn: num_negative avg 244
+
+im_size: (300.0, 449.0)
+scale: 0.898203611374
+height, width: (19, 29)
+rpn: gt_boxes.shape (1, 5)
+rpn: gt_boxes [[  53.89221573    0.          356.58682251  299.10180664   15.        ]]
+total_anchors 4959
+inds_inside 1732
+anchors.shape (1732, 4)
+means:
+[[ 0.00925419  0.00851891  0.02339798  0.06716916]]
+stdevs:
+[[ 0.10210695  0.08306719  0.2899191   0.22814815]]
+rpn: max max_overlap 0.719075084881
+rpn: num_positive 12
+rpn: num_negative 244
+rpn: num_positive avg 11
+rpn: num_negative avg 244
+
+im_size: (300.0, 343.0)
+scale: 0.686498880386
+height, width: (19, 22)
+rpn: gt_boxes.shape (2, 5)
+rpn: gt_boxes [[   7.55148745  164.75971985  188.78718567  275.97253418    2.        ]
+ [ 175.74371338  172.99771118  340.50341797  276.6590271     2.        ]]
+total_anchors 3762
+inds_inside 1174
+anchors.shape (1174, 4)
+means:
+[[ 0.00938654  0.00805639  0.02132278  0.0685639 ]]
+stdevs:
+[[ 0.10102446  0.08320646  0.28653878  0.22541752]]
+rpn: max max_overlap 0.810980020064
+rpn: num_positive 4
+rpn: num_negative 252
+rpn: num_positive avg 11
+rpn: num_negative avg 244
+
+im_size: (300.0, 400.0)
+scale: 0.800000011921
+height, width: (19, 25)
+rpn: gt_boxes.shape (1, 5)
+rpn: gt_boxes [[ 119.19999695   48.          314.3999939   251.19999695   20.        ]]
+total_anchors 4275
+inds_inside 1474
+anchors.shape (1474, 4)
+means:
+[[ 0.0091501   0.00720698  0.00555271  0.05239455]]
+stdevs:
+[[ 0.09894309  0.08184567  0.28615     0.22918824]]
+rpn: max max_overlap 0.611328716706
+rpn: num_positive 9
+rpn: num_negative 247
+rpn: num_positive avg 10
+rpn: num_negative avg 245
+
+im_size: (300.0, 343.0)
+scale: 0.686498880386
+height, width: (19, 22)
+rpn: gt_boxes.shape (1, 5)
+rpn: gt_boxes I0211 13:09:11.452229 31276 solver.cpp:229] Iteration 20, loss = 0.115611
+I0211 13:09:11.452281 31276 solver.cpp:245]     Train net output #0: rpn_cls_loss = 0.0785103 (* 1 = 0.0785103 loss)
+I0211 13:09:11.452294 31276 solver.cpp:245]     Train net output #1: rpn_loss_bbox = 0.0371009 (* 1 = 0.0371009 loss)
+I0211 13:09:11.452302 31276 sgd_solver.cpp:106] Iteration 20, lr = 0.001
+[[ 248.5125885   187.41418457  330.20596313  251.25857544    3.        ]]
+total_anchors 3762
+inds_inside 1174
+anchors.shape (1174, 4)
+means:
+[[ 0.00851314  0.00752659  0.00707213  0.05215644]]
+stdevs:
+[[ 0.0989795   0.08169987  0.28594437  0.22851302]]
+rpn: max max_overlap 0.694802750955
+rpn: num_positive 1
+rpn: num_negative 255
+rpn: num_positive avg 10
+rpn: num_negative avg 245
+
+im_size: (300.0, 400.0)
+scale: 0.800000011921
+height, width: (19, 25)
+rpn: gt_boxes.shape (2, 5)
+rpn: gt_boxes [[ 100.          108.          320.          210.3999939     6.        ]
+ [ 327.20001221  164.          339.20001221  199.19999695   15.        ]]
+total_anchors 4275
+inds_inside 1474
+anchors.shape (1474, 4)
+means:
+[[ 0.00654503  0.00628481 -0.03094647  0.02041814]]
+stdevs:
+[[ 0.10265054  0.08507588  0.35765361  0.28028735]]
+rpn: max max_overlap 0.717671340124
+rpn: num_positive 10
+rpn: num_negative 246
+rpn: num_positive avg 10
+rpn: num_negative avg 245
+
+im_size: (300.0, 448.0)
+scale: 0.895522415638
+height, width: (19, 28)
+rpn: gt_boxes.shape (3, 5)
+rpn: gt_boxes [[ 313.43283081  174.62686157  385.97015381  203.28358459    7.        ]
+ [ 224.77612305  172.83581543  329.55224609  212.23880005    7.        ]
+ [ 171.94029236  174.62686157  224.77612305  214.92536926    7.        ]]
+total_anchors 4788
+inds_inside 1732
+anchors.shape (1732, 4)
+means:
+[[ 0.00643418  0.00654087 -0.0326591   0.01141481]]
+stdevs:
+[[ 0.10165967  0.0864035   0.35447224  0.28405619]]
+rpn: max max_overlap 0.650867004007
+rpn: num_positive 4
+rpn: num_negative 252
+rpn: num_positive avg 9
+rpn: num_negative avg 246
+
+im_size: (300.0, 400.0)
+scale: 0.800000011921
+height, width: (19, 25)
+rpn: gt_boxes.shape (1, 5)
+rpn: gt_boxes [[ 113.59999847   48.          259.20001221  245.6000061    12.        ]]
+total_anchors 4275
+inds_inside 1474
+anchors.shape (1474, 4)
+means:
+[[ 0.00678876  0.00696143 -0.02897961  0.02076667]]
+stdevs:
+[[ 0.10057048  0.08796142  0.35143984  0.28781585]]
+rpn: max max_overlap 0.56273855466
+rpn: num_positive 4
+rpn: num_negative 252
+rpn: num_positive avg 9
+rpn: num_negative avg 246
+
+im_size: (300.0, 400.0)
+scale: 0.800000011921
+height, width: (19, 25)
+rpn: gt_boxes.shape (2, 5)
+rpn: gt_boxes [[ 159.19999695   70.40000153  324.          299.20001221   15.        ]
+ [  94.40000153   88.80000305  191.19999695  213.6000061    15.        ]]
+total_anchors 4275
+inds_inside 1474
+anchors.shape (1474, 4)
+means:
+[[ 0.00751932  0.00845866 -0.04217609  0.01697783]]
+stdevs:
+[[ 0.10008806  0.08687646  0.35173529  0.2832368 ]]
+rpn: max max_overlap 0.75093015885
+rpn: num_positive 7
+rpn: num_negative 249
+rpn: num_positive avg 9
+rpn: num_negative avg 246
+
+im_size: (300.0, 374.0)
+scale: 0.748129665852
+height, width: (19, 24)
+rpn: gt_boxes.shape (2, 5)
+rpn: gt_boxes [[ 225.93516541   94.26433563  372.568573    227.431427     13.        ]
+ [   0.           76.30922699  240.89775085  299.25186157   15.        ]]
+total_anchors 4104
+inds_inside 1339
+anchors.shape (1339, 4)
+means:
+[[ 0.00740156  0.00884677 -0.04033531  0.01650835]]
+stdevs:
+[[ 0.09944646  0.08658244  0.34949468  0.2812526 ]]
+rpn: max max_overlap 0.785973617864
+rpn: num_positive 3
+rpn: num_negative 253
+rpn: num_positive avg 9
+rpn: num_negative avg 246
+
+im_size: (300.0, 400.0)
+scale: 0.800000011921
+height, width: (19, 25)
+rpn: gt_boxes.shape (1, 5)
+rpn: gt_boxes [[ 129.6000061   119.19999695  243.19999695  291.20001221    8.        ]]
+total_anchors 4275
+inds_inside 1474
+anchors.shape (1474, 4)
+means:
+[[ 0.00673124  0.0090882  -0.03721278  0.0161627 ]]
+stdevs:
+[[ 0.09958057  0.08616992  0.34904819  0.27982716]]
+rpn: max max_overlap 0.726042813762
+rpn: num_positive 2
+rpn: num_negative 254
+rpn: num_positive avg 8
+rpn: num_negative avg 247
+
+im_size: (400.0, 300.0)
+scale: 0.800000011921
+height, width: (25, 19)
+rpn: gt_boxes.shape (1, 5)
+rpn: gt_boxes [[ 140.           15.19999981  196.80000305   53.59999847    4.        ]]
+total_anchors 4275
+inds_inside 1484
+anchors.shape (1484, 4)
+means:
+[[ 0.00676864  0.00863526 -0.03754279  0.01360515]]
+stdevs:
+[[ 0.09932759  0.08618223  0.34818712  0.28138806]]
+rpn: max max_overlap 0.55598633864
+rpn: num_positive 1
+rpn: num_negative 255
+rpn: num_positive avg 8
+rpn: num_negative avg 247
+
+im_size: (327.0, 300.0)
+scale: 0.680272102356
+height, width: (21, 19)
+rpn: gt_boxes.shape (2, 5)
+rpn: gt_boxes [[ 114.96598816   46.25850296  174.1496582   200.           15.        ]
+ [  51.02040863   82.99319458  262.58502197  274.1496582    13.        ]]
+total_anchors 3591
+inds_inside 1086
+anchors.shape (1086, 4)
+means:
+[[ 0.00742569  0.01025596 -0.04730262 -0.00083408]]
+stdevs:
+[[ 0.09768856  0.08483371  0.34174063  0.28086345]]
+rpn: max max_overlap 0.623255377064
+rpn: num_positive 11
+rpn: num_negative 245
+rpn: num_positive avg 8
+rpn: num_negative avg 247
+
+im_size: (300.0, 400.0)
+scale: 0.800000011921
+height, width: (19, 25)
+rpn: gt_boxes.shape (1, 5)
+rpn: gt_boxes [[ 110.40000153    1.60000002  272.          266.3999939    14.        ]]
+total_anchors 4275
+inds_inside 1474
+anchors.shape (1474, 4)
+means:
+[[ 0.00718351  0.009802   -0.05875562  0.00024763]]
+stdevs:
+[[ 0.09796528  0.08367283  0.34354374  0.27695226]]
+rpn: max max_overlap 0.620079289106
+rpn: num_positive 6
+rpn: num_negative 250
+rpn: num_positive avg 8
+rpn: num_negative avg 247
+
+im_size: (300.0, 450.0)
+scale: 0.900900900364
+height, width: (19, 29)
+rpn: gt_boxes.shape (1, 5)
+rpn: gt_boxes [[ 171.1711731    82.88288116  328.8288269   298.19821167    8.        ]]
+total_anchors 4959
+inds_inside 1732
+anchors.shape (1732, 4)
+means:
+[[ 0.00639809  0.01199927 -0.07025351 -0.00437395]]
+stdevs:
+[[ 0.09832753  0.08355073  0.34566164  0.27451659]]
+rpn: max max_overlap 0.511976237327
+rpn: num_positive 6
+rpn: num_negative 250
+rpn: num_positive avg 8
+rpn: num_negative avg 247
+
+im_size: (300.0, 450.0)
+scale: 0.900900900364
+height, width: (19, 29)
+rpn: gt_boxes.shape (2, 5)
+rpn: gt_boxes [[ 189.18919373   87.38739014  264.86486816  172.07206726   15.        ]
+ [ 149.54954529  108.10810852  304.5045166   208.10810852   14.        ]]
+total_anchors 4959
+inds_inside 1732
+anchors.shape (1732, 4)
+means:
+[[ 0.00594701  0.01173121 -0.06971373 -0.000761  ]]
+stdevs:
+[[ 0.09746033  0.08410687  0.34207621  0.27234255]]
+rpn: max max_overlap 0.750925161213
+rpn: num_positive 6
+rpn: num_negative 250
+rpn: num_positive avg 8
+rpn: num_negative avg 247
+
+im_size: (300.0, 401.0)
+scale: 0.802139043808
+height, width: (19, 26)
+rpn: gt_boxes.shape (2, 5)
+rpn: gt_boxes [[  53.74331665   61.76470566  164.43850708  230.21389771   12.        ]
+ [ 143.58288574   92.24598694  247.86096191  210.96257019   12.        ]]
+total_anchors 4446
+inds_inside 1474
+anchors.shape (1474, 4)
+means:
+[[ 0.00560407  0.01167848 -0.0654662  -0.00197729]]
+stdevs:
+[[ 0.09723255  0.0832294   0.34020554  0.26889455]]
+rpn: max max_overlap 0.769258518716
+rpn: num_positive 6
+rpn: num_negative 250
+rpn: num_positive avg 8
+rpn: num_negative avg 247
+
+im_size: (300.0, 400.0)
+scale: 0.800000011921
+height, width: (19, 25)
+rpn: gt_boxes.shape (11, 5)
+rpn: gt_boxes [[  97.59999847  102.40000153  371.20001221  299.20001221   11.        ]
+ [ 182.3999939    44.79999924  250.3999939   132.80000305   15.        ]
+ [ 136.           67.19999695  176.          120.80000305   15.        ]
+ [  69.59999847   56.          112.80000305   88.80000305   15.        ]
+ [   8.           98.40000153  151.19999695  299.20001221   15.        ]
+ [  36.79999924   72.80000305  179.19999695  228.           15.        ]
+ [   3.20000005   56.79999924   40.          144.80000305   15.        ]
+ [ 200.           51.20000076  284.79998779  149.6000061    15.        ]
+ [ 267.20001221   64.          336.79998779  172.80000305   15.        ]
+ [ 275.20001221   84.80000305  399.20001221  269.6000061    15.        ]
+ [ 222.3999939   180.          345.6000061   299.20001221   15.        ]]
+total_anchors 4275
+inds_inside 1474
+anchors.shape (1474, 4)
+means:
+[[ 0.00749766  0.00971679 -0.07052568 -0.00326762]]
+stdevs:
+[[ 0.09530659  0.0889665   0.32822452  0.28125031]]
+rpn: max max_overlap 0.819747899301
+rpn: num_positive 38
+rpn: num_negative 218
+rpn: num_positive avg 9
+rpn: num_negative avg 246
+
+im_size: (300.0, 375.0)
+scale: 0.75
+height, width: (19, 24)
+rpn: gt_boxes.shape (2, 5)
+rpn: gt_boxes [[ 210.75  148.5   291.75  193.5     3.  ]
+ [ 204.    129.75  235.5   185.25    3.  ]]
+total_anchors 4104
+inds_inside 1339
+anchors.shape (1339, 4)
+means:
+[[ 0.00827505  0.00971058 -0.07239844 -0.00664611]]
+stdevs:
+[[ 0.09510515  0.08894342  0.32702312  0.28221618]]
+rpn: max max_overlap 0.771910841809
+rpn: num_positive 3
+rpn: num_negative 253
+rpn: num_positive avg 9
+rpn: num_negative avg 246
+
+im_size: (300.0, 400.0)
+scale: 0.800000011921
+height, width: (19, 25)
+rpn: gt_boxes.shape (2, 5)
+rpn: gt_boxes [[   0.           56.          101.59999847  155.19999695   20.        ]
+ [ 127.19999695   24.79999924  392.79998779  299.20001221   15.        ]]
+total_anchors 4275
+inds_inside 1474
+anchors.shape (1474, 4)
+means:
+[[ 0.00799823  0.00998126 -0.07024888 -0.00607478]]
+stdevs:
+[[ 0.09501083  0.08810961  0.3219724   0.27821566]]
+rpn: max max_overlap 0.892597865754
+rpn: num_positive 10
+rpn: num_negative 246
+rpn: num_positive avg 9
+rpn: num_negative avg 246
+
+im_size: (300.0, 400.0)
+scale: 0.800000011921
+height, width: (19, 25)
+rpn: gt_boxes.shape (3, 5)
+rpn: gt_boxes [[ 164.          159.19999695  325.6000061   294.3999939    12.        ]
+ [  28.79999924  171.19999695  176.          263.20001221   12.        ]
+ [  44.           45.59999847  352.          298.3999939    15.        ]]
+total_anchors 4275
+inds_inside 1474
+anchors.shape (1474, 4)
+means:
+[[ 0.00693705  0.01040035 -0.06108418 -0.00562492]]
+stdevs:
+[[ 0.09456199  0.08657105  0.31928635  0.27211143]]
+rpn: max max_overlap 0.802706834393
+rpn: num_positive 13
+rpn: num_negative 243
+rpn: num_positive avg 9
+rpn: num_negative avg 246
+
+im_size: (300.0, 400.0)
+scale: 0.800000011921
+height, width: (19, 25)
+rpn: gt_boxes.shape (2, 5)
+rpn: gt_boxes [[  27.20000076   98.40000153  120.80000305  144.80000305   14.        ]
+ [ 262.3999939   112.          370.3999939   167.19999695   14.        ]]
+total_anchors 4275
+inds_inside 1474
+anchors.shape (1474, 4)
+means:
+[[ 0.00716116  0.01076522 -0.06000809 -0.00509836]]
+stdevs:
+[[ 0.09428843  0.08640971  0.31853081  0.27135905]]
+rpn: max max_overlap 0.869929038801
+rpn: num_positive 2
+rpn: num_negative 254
+rpn: num_positive avg 9
+rpn: num_negative avg 247
+
+im_size: (300.0, 400.0)
+scale: 0.800000011921
+height, width: (19, 25)
+rpn: gt_boxes.shape (1, 5)
+rpn: gt_boxes [[  48.            8.          331.20001221  297.6000061    14.        ]]
+total_anchors 4275
+inds_inside 1474
+anchors.shape (1474, 4)
+means:
+[[  6.59483230e-03   1.05443580e-02  -5.36193981e-02   2.27531569e-05]]
+stdevs:
+[[ 0.09350195  0.08531712  0.31389774  0.2672549 ]]
+rpn: max max_overlap 0.793524279266
+rpn: num_positive 12
+rpn: num_negative 244
+rpn: num_positive avg 9
+rpn: num_negative avg 246
+
+im_size: (300.0, 343.0)
+scale: 0.686498880386
+height, width: (19, 22)
+rpn: gt_boxes.shape (2, 5)
+rpn: gt_boxes [[ 153.77574158  164.75971985  335.01144409  275.97253418    2.        ]
+ [   2.05949664  172.99771118  166.81922913  276.6590271     2.        ]]
+total_anchors 3762
+inds_inside 1174
+anchors.shape (1174, 4)
+means:
+[[ 0.00649871  0.00973927 -0.0532208   0.00228538]]
+stdevs:
+[[ 0.09311946  0.08541126  0.31144103  0.26573782]]
+rpn: max max_overlap 0.829542543376
+rpn: num_positive 5
+rpn: num_negative 251
+rpn: num_positive avg 8
+rpn: num_negative avg 247
+
+im_size: (300.0, 400.0)
+scale: 0.800000011921
+height, width: (19, 25)
+rpn: gt_boxes.shape (2, 5)
+rpn: gt_boxes [[   8.80000019    0.80000001  399.20001221  299.20001221   19.        ]
+ [ 249.6000061   105.59999847  364.          299.20001221   15.        ]]
+total_anchors 4275
+inds_inside 1474
+anchors.shape (1474, 4)
+means:
+[[ 0.0060074   0.00903549 -0.04638222  0.0216319 ]]
+stdevs:
+[[ 0.09130939  0.09018139  0.30568457  0.27416244]]
+rpn: max max_overlap 0.68967850001
+rpn: num_positive 16
+rpn: num_negative 240
+rpn: num_positive avg 9
+rpn: num_negative avg 246
+
+im_size: (400.0, 300.0)
+scale: 0.800000011921
+height, width: (25, 19)
+rpn: gt_boxes.shape (2, 5)
+rpn: gt_boxes [[  66.40000153   58.40000153  226.3999939   141.6000061     4.        ]
+ [ 186.3999939    79.19999695  225.6000061   111.19999695    3.        ]]
+total_aI0211 13:09:13.836688 31276 solver.cpp:229] Iteration 40, loss = 0.0826648
+I0211 13:09:13.836750 31276 solver.cpp:245]     Train net output #0: rpn_cls_loss = 0.0738146 (* 1 = 0.0738146 loss)
+I0211 13:09:13.836760 31276 solver.cpp:245]     Train net output #1: rpn_loss_bbox = 0.00885016 (* 1 = 0.00885016 loss)
+I0211 13:09:13.836769 31276 sgd_solver.cpp:106] Iteration 40, lr = 0.001
+nchors 4275
+inds_inside 1484
+anchors.shape (1484, 4)
+means:
+[[ 0.00571493  0.00860133 -0.0518847   0.01257952]]
+stdevs:
+[[ 0.0916329   0.09048669  0.30639145  0.28186814]]
+rpn: max max_overlap 0.767447922022
+rpn: num_positive 6
+rpn: num_negative 250
+rpn: num_positive avg 9
+rpn: num_negative avg 246
+
+im_size: (400.0, 300.0)
+scale: 0.800000011921
+height, width: (25, 19)
+rpn: gt_boxes.shape (3, 5)
+rpn: gt_boxes [[   0.           93.59999847  164.          397.6000061     6.        ]
+ [ 217.6000061   231.19999695  241.6000061   300.           15.        ]
+ [ 255.19999695  229.6000061   286.3999939   321.6000061    15.        ]]
+total_anchors 4275
+inds_inside 1484
+anchors.shape (1484, 4)
+means:
+[[ 0.00582483  0.00907667 -0.05423492  0.01106953]]
+stdevs:
+[[ 0.09158788  0.09034183  0.30617215  0.28077839]]
+rpn: max max_overlap 0.781015521093
+rpn: num_positive 4
+rpn: num_negative 252
+rpn: num_positive avg 8
+rpn: num_negative avg 247
+
+im_size: (450.0, 300.0)
+scale: 0.900900900364
+height, width: (29, 19)
+rpn: gt_boxes.shape (3, 5)
+rpn: gt_boxes [[  25.22522545  214.41441345  206.30630493  449.54956055   13.        ]
+ [  90.99098969  280.18017578  299.09909058  449.54956055   15.        ]
+ [  84.68468475   72.97297668  241.44143677  370.27026367   15.        ]]
+total_anchors 4959
+inds_inside 1742
+anchors.shape (1742, 4)
+means:
+[[ 0.00572325  0.00861309 -0.05315562  0.01866628]]
+stdevs:
+[[ 0.09012178  0.09300858  0.30008659  0.28720628]]
+rpn: max max_overlap 0.759594704445
+rpn: num_positive 19
+rpn: num_negative 237
+rpn: num_positive avg 9
+rpn: num_negative avg 246
+
+im_size: (397.0, 300.0)
+scale: 0.79365080595
+height, width: (25, 19)
+rpn: gt_boxes.shape (1, 5)
+rpn: gt_boxes [[ 103.17460632   69.84127045  264.28570557  224.60317993   12.        ]]
+total_anchors 4275
+inds_inside 1458
+anchors.shape (1458, 4)
+means:
+[[ 0.00565873  0.00894953 -0.04839824  0.02158626]]
+stdevs:
+[[ 0.09033219  0.09262494  0.29987638  0.28573002]]
+rpn: max max_overlap 0.648852416013
+rpn: num_positive 6
+rpn: num_negative 250
+rpn: num_positive avg 9
+rpn: num_negative avg 246
+
+im_size: (300.0, 400.0)
+scale: 0.800000011921
+height, width: (19, 25)
+rpn: gt_boxes.shape (2, 5)
+rpn: gt_boxes [[  84.80000305  107.19999695  281.6000061   291.20001221   13.        ]
+ [ 150.3999939    44.          208.          201.6000061    15.        ]]
+total_anchors 4275
+inds_inside 1474
+anchors.shape (1474, 4)
+means:
+[[ 0.00580003  0.00993396 -0.05203331  0.01809817]]
+stdevs:
+[[ 0.09012735  0.09257427  0.29957791  0.28563011]]
+rpn: max max_overlap 0.600074982288
+rpn: num_positive 5
+rpn: num_negative 251
+rpn: num_positive avg 9
+rpn: num_negative avg 246
+
+im_size: (300.0, 400.0)
+scale: 0.800000011921
+height, width: (19, 25)
+rpn: gt_boxes.shape (1, 5)
+rpn: gt_boxes [[  12.           63.20000076   89.59999847  188.80000305   16.        ]]
+total_anchors 4275
+inds_inside 1474
+anchors.shape (1474, 4)
+means:
+[[ 0.00532382  0.0101511  -0.05252338  0.01530286]]
+stdevs:
+[[ 0.08991983  0.09247268  0.29842038  0.28616792]]
+rpn: max max_overlap 0.64248192063
+rpn: num_positive 3
+rpn: num_negative 253
+rpn: num_positive avg 8
+rpn: num_negative avg 247
+
+im_size: (300.0, 450.0)
+scale: 0.900900900364
+height, width: (19, 29)
+rpn: gt_boxes.shape (6, 5)
+rpn: gt_boxes [[ 301.80178833   43.24324417  375.6756897    75.67567444    1.        ]
+ [ 177.47747803   54.05405426  249.54954529   93.69369507    1.        ]
+ [ 188.2882843   120.72071838  261.26126099  152.2522583     1.        ]
+ [  41.44144058   73.87387085  118.01802063  107.20720673    1.        ]
+ [  72.07207489  125.22522736  143.24324036  156.75675964    1.        ]
+ [  77.47747803  197.29730225  146.84684753  227.92793274    1.        ]]
+total_anchors 4959
+inds_inside 1732
+anchors.shape (1732, 4)
+means:
+[[ 0.00477491  0.01051655 -0.05577623  0.00850689]]
+stdevs:
+[[ 0.08960026  0.09205281  0.29664336  0.28803748]]
+rpn: max max_overlap 0.672468878302
+rpn: num_positive 7
+rpn: num_negative 249
+rpn: num_positive avg 8
+rpn: num_negative avg 247
+
+im_size: (300.0, 444.0)
+scale: 0.887573957443
+height, width: (19, 28)
+rpn: gt_boxes.shape (1, 5)
+rpn: gt_boxes [[   6.21301794    4.43787003  436.68640137  294.67456055    1.        ]]
+total_anchors 4788
+inds_inside 1712
+anchors.shape (1712, 4)
+means:
+[[ 0.00416028  0.01176563 -0.04300994  0.03275248]]
+stdevs:
+[[ 0.08773618  0.09590766  0.29214758  0.2955411 ]]
+rpn: max max_overlap 0.562275227315
+rpn: num_positive 24
+rpn: num_negative 232
+rpn: num_positive avg 9
+rpn: num_negative avg 246
+
+im_size: (300.0, 400.0)
+scale: 0.800000011921
+height, width: (19, 25)
+rpn: gt_boxes.shape (4, 5)
+rpn: gt_boxes [[ 229.6000061   134.3999939   398.3999939   299.20001221    9.        ]
+ [ 208.           36.          264.79998779   92.80000305   16.        ]
+ [ 127.19999695  120.80000305  188.          177.6000061    20.        ]
+ [  67.19999695  116.          128.          202.3999939    20.        ]]
+total_anchors 4275
+inds_inside 1474
+anchors.shape (1474, 4)
+means:
+[[ 0.00442214  0.01124334 -0.03606602  0.03832184]]
+stdevs:
+[[ 0.08811658  0.09619733  0.29144139  0.29351801]]
+rpn: max max_overlap 0.748697910674
+rpn: num_positive 13
+rpn: num_negative 243
+rpn: num_positive avg 9
+rpn: num_negative avg 246
+
+im_size: (300.0, 449.0)
+scale: 0.898203611374
+height, width: (19, 29)
+rpn: gt_boxes.shape (3, 5)
+rpn: gt_boxes [[ 241.61676025  149.10179138  273.9520874   167.96406555    7.        ]
+ [ 181.43711853  150.89820862  212.87425232  167.96406555    7.        ]
+ [ 141.01795959  157.18562317  193.11376953  188.62275696    7.        ]]
+total_anchors 4959
+inds_inside 1732
+anchors.shape (1732, 4)
+means:
+[[ 0.00257084  0.01067978 -0.04155254  0.00546543]]
+stdevs:
+[[ 0.08820464  0.0995129   0.29025595  0.36323824]]
+rpn: max max_overlap 0.420477512341
+rpn: num_positive 10
+rpn: num_negative 246
+rpn: num_positive avg 9
+rpn: num_negative avg 246
+
+im_size: (300.0, 353.0)
+scale: 0.705882370472
+height, width: (19, 23)
+rpn: gt_boxes.shape (2, 5)
+rpn: gt_boxes [[ 117.1764679   120.          197.64706421  212.47058105   15.        ]
+ [  39.52941132   21.88235283  242.8235321   107.29412079    7.        ]]
+total_anchors 3933
+inds_inside 1216
+anchors.shape (1216, 4)
+means:
+[[ 0.00284522  0.0111226  -0.03889542  0.00616713]]
+stdevs:
+[[ 0.08791485  0.09971473  0.28920776  0.36175969]]
+rpn: max max_overlap 0.78305068542
+rpn: num_positive 6
+rpn: num_negative 250
+rpn: num_positive avg 9
+rpn: num_negative avg 246
+
+im_size: (300.0, 400.0)
+scale: 0.800000011921
+height, width: (19, 25)
+rpn: gt_boxes.shape (4, 5)
+rpn: gt_boxes [[  31.20000076   17.60000038  362.3999939   285.6000061     7.        ]
+ [   0.           59.20000076   39.20000076  100.80000305    7.        ]
+ [  47.20000076   30.39999962   69.59999847  104.           15.        ]
+ [  32.           40.79999924   82.40000153   84.            7.        ]]
+total_anchors 4275
+inds_inside 1474
+anchors.shape (1474, 4)
+means:
+[[  2.46892663e-03   1.05905594e-02  -3.61232574e-02   8.61019367e-05]]
+stdevs:
+[[ 0.08768024  0.09930162  0.28809988  0.36338124]]
+rpn: max max_overlap 0.733378243954
+rpn: num_positive 10
+rpn: num_negative 246
+rpn: num_positive avg 9
+rpn: num_negative avg 246
+
+im_size: (300.0, 450.0)
+scale: 0.900900900364
+height, width: (19, 29)
+rpn: gt_boxes.shape (1, 5)
+rpn: gt_boxes [[ 304.5045166    21.62162209  360.36035156   66.66666412    1.        ]]
+total_anchors 4959
+inds_inside 1732
+anchors.shape (1732, 4)
+means:
+[[ 0.00263695  0.01073014 -0.03630848 -0.00065568]]
+stdevs:
+[[ 0.08765281  0.09923323  0.28780167  0.36330742]]
+rpn: max max_overlap 0.614454109036
+rpn: num_positive 1
+rpn: num_negative 255
+rpn: num_positive avg 9
+rpn: num_negative avg 246
+
+im_size: (300.0, 400.0)
+scale: 0.800000011921
+height, width: (19, 25)
+rpn: gt_boxes.shape (4, 5)
+rpn: gt_boxes [[ 176.           46.40000153  396.79998779  296.79998779   15.        ]
+ [ 116.           84.80000305  208.          296.           15.        ]
+ [  53.59999847   62.40000153  190.3999939   299.20001221   15.        ]
+ [   1.60000002   58.40000153  138.3999939   296.79998779   15.        ]]
+total_anchors 4275
+inds_inside 1474
+anchors.shape (1474, 4)
+means:
+[[ 0.00262829  0.00973222 -0.03284916  0.0193354 ]]
+stdevs:
+[[ 0.08622766  0.10699091  0.282646

@@ -1,0 +1,13 @@
+train_net: "train_dense31net.prototxt"
+base_lr: 0.001
+display: 20
+max_iter: 240000
+lr_policy: "multistep"
+gamma: 0.1
+momentum: 0.9
+weight_decay: 0.0001
+solver_mode: GPU
+random_seed: 831486
+stepvalue: 120000
+stepvalue: 180000
+type: "Nesterov"

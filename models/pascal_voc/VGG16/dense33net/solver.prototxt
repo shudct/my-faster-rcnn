@@ -1,0 +1,14 @@
+train_net: "models/pascal_voc/VGG16/dense33net/train_densenet.prototxt"
+base_lr: 0.001
+display: 20
+max_iter: 240000
+lr_policy: "multistep"
+gamma: 0.1
+momentum: 0.9
+weight_decay: 0.0002
+solver_mode: GPU
+#random_seed: 831486
+stepvalue: 120000
+stepvalue: 180000
+type: "Nesterov"
+snapshot_prefix: "pascal_densenet-33L-C25-lr1e-3-wd2-conti"

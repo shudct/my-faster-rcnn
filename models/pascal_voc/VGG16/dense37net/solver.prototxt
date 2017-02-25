@@ -1,0 +1,15 @@
+train_net: "models/pascal_voc/VGG16/dense37net/train_densenet.prototxt"
+base_lr: 0.001
+display: 20
+max_iter: 240000
+lr_policy: "multistep"
+gamma: 0.1
+momentum: 0.9
+weight_decay: 0.0002
+solver_mode: GPU
+random_seed: 831486
+stepvalue: 100000
+stepvalue: 150000
+type: "Nesterov"
+snapshot: 50000
+snapshot_prefix: "pascal_densenet-37L-lr1e-3-wd2"

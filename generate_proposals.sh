@@ -1,0 +1,1 @@
+python tools/rpn_generate.py --gpu=0 --def=models/pascal_voc/VGG16/dense33net/test_densenet.prototxt --net=output/default/voc_2007_trainval/pascal_densenet-33L-C25-lr1e-3-wd2-conti_stage1_iter_210000.caffemodel 
